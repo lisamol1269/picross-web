@@ -7,15 +7,14 @@
 }
 
 table {
-    border-spacing: 0px;
-    
+    border-spacing: 0px;    
 }
 
 td {
     width: 2em;
     height: 2em;
     margin:0;
-    background-color: red;
+    background-color: white;
     border: 2px solid black;
 }
 
