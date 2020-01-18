@@ -1,9 +1,18 @@
 $(document).ready(() => {
-    fillGrid(10,10);
+    const sel = $('select');
+    const m = sel.val().match(/\d+/g);
+    fillGrid(m[1], m[0]);
+    initBoard();
+    sel.change(function() {
+        const match = sel.val().match(/\d+/g);
+        fillGrid(match[1], match[0]);
+        initBoard();
+    });
 });
 
 function fillGrid(rows, cols) {
     const grid = document.querySelector('table tbody');
+    grid.innerHTML = '';
     for (let i = 0; i < rows; i++) {
         const r = document.createElement('tr');
         r.setAttribute('id', i);
@@ -19,6 +28,22 @@ function fillGrid(rows, cols) {
     }
 }
 
-$('select').change(function() {
-    console.log('change');
-});
+function initBoard() {
+    const sel = $('select');
+    const m = sel.val().match(/\d+/g);
+    const rows = Integer.parseInt(m[0]);
+    const cols = Integer.parseInt(m[1]);
+    const slide = $('input.slider');
+    let mat = [];
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (Math.random() < slide.val()) {
+                mat[i][j] = 1;
+            }
+            else {
+                mat[i][j] = 0;
+            }
+        }
+    }
+    return mat;
+}
