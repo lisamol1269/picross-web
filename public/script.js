@@ -6,6 +6,9 @@ $(document).ready(() => {
     $('#button-reset').click(function() {
         init();
     });
+    document.querySelector('table').addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
 });
 
 function init() {

@@ -19,6 +19,14 @@ td {
     border: 2px solid black;
 }
 
+tr:nth-child(5n+0) td {
+    border-bottom-color: blue;
+}
+
+tr td:nth-child(5n+0) {
+    border-right-color: blue;
+}
+
 #myRange {
     text-align: center;
     width: 50%;
