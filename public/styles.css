@@ -5,3 +5,16 @@
 .grid-item:hover {
     background-color: aquamarine;
 }
+
+table {
+    border-spacing: 0px;
+    
+}
+
+td {
+    width: 2em;
+    height: 2em;
+    margin:0;
+    background-color: red;
+    border: 2px solid black;
+}

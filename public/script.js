@@ -1,25 +1,24 @@
 $(document).ready(() => {
-    fillGrid(4,4);
+    fillGrid(10,10);
 });
 
-function fillGrid(cols, rows) {
-    const grid = document.querySelector('table.grid-conatiner');
-    grid.innerHTML = '';
-    console.log(grid);
-    for (let i = 0; i < cols; i++) {
+function fillGrid(rows, cols) {
+    const grid = document.querySelector('table tbody');
+    for (let i = 0; i < rows; i++) {
         const r = document.createElement('tr');
         r.setAttribute('id', i);
-        for (let j = 0; j < rows; j++) {
+        for (let j = 0; j < cols; j++) {
             const td = document.createElement('td');
-            td.setAttribute('col', i.toString());
-            td.setAttribute('row', j.toString());
+            td.setAttribute('col', j.toString());
+            td.setAttribute('row', i.toString());
             td.setAttribute('class', 'grid-item');
             r.appendChild(td);
+            //console.log(td.outerHTML);
         }
-        grid.appendChild(r);
+        grid.innerHTML += r.outerHTML;
     }
 }
 
-function get2D(index) {
-
-}
+$('select').change(function() {
+    console.log('change');
+});
