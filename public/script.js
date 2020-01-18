@@ -1,17 +1,22 @@
 $(document).ready(() => {
-    const sel = $('select');
-    const m = sel.val().match(/\d+/g);
-    fillGrid(m[1], m[0]);
-    initBoard();
-    sel.change(function() {
-        const match = sel.val().match(/\d+/g);
-        fillGrid(match[1], match[0]);
-        initBoard();
+    init();
+    $('select').change(function() {
+        init();
+    });
+    $('#button-reset').click(function() {
+        init();
     });
 });
 
+function init() {
+    const match = $('select').val().match(/\d+/g);
+    fillGrid(Number.parseInt(match[1]), Number.parseInt(match[0]));
+    initBoard();
+}
+
 function fillGrid(rows, cols) {
     const grid = document.querySelector('table tbody');
+    console.log(rows, cols);
     grid.innerHTML = '';
     for (let i = 0; i < rows; i++) {
         const r = document.createElement('tr');
@@ -31,14 +36,16 @@ function fillGrid(rows, cols) {
 function initBoard() {
     const sel = $('select');
     const m = sel.val().match(/\d+/g);
-    const rows = Integer.parseInt(m[0]);
-    const cols = Integer.parseInt(m[1]);
+    const rows = Number.parseInt(m[1]);
+    const cols = Number.parseInt(m[0]);
     const slide = $('input.slider');
     let mat = [];
     for (let i = 0; i < rows; i++) {
+        mat.push([]);
         for (let j = 0; j < cols; j++) {
             if (Math.random() < slide.val()) {
                 mat[i][j] = 1;
+                $(`#${i}`).children()[j].style.backgroundColor = 'lightGreen';
             }
             else {
                 mat[i][j] = 0;

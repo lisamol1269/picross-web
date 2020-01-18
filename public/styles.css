@@ -19,6 +19,12 @@ td {
     border: 2px solid black;
 }
 
+#myRange {
+    text-align: center;
+    width: 50%;
+
+}
+
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
