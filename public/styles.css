@@ -15,15 +15,15 @@ td {
     height: 2em;
     margin:0;
     background-color: white;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 
 tr:nth-child(5n+0) td {
-    border-bottom-color: blue;
+    border-bottom: 3px solid black;
 }
 
 tr td:nth-child(5n+0) {
-    border-right-color: blue;
+    border-right: 3px solid black;
 }
 
 #myRange {
