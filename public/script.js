@@ -1,3 +1,4 @@
+const gameState = []; // 0: default, 1: playerLeftClick, 2: playerFlag
 $(document).ready(() => {
     init();
     $('select').change(function() {
@@ -6,15 +7,27 @@ $(document).ready(() => {
     $('#button-reset').click(function() {
         init();
     });
-    document.querySelector('table').addEventListener('contextmenu', (e) => {
+    $('td').on('contextmenu', (e) => {
         e.preventDefault();
+        const obj = $(e.currentTarget);
+        playerFlag(obj.attr('row'), obj.attr('col'));
+    });
+    $('td').click((e) => {
+        const obj = $(e.currentTarget);
+        playerLeftClick(obj.attr('row'), obj.attr('col'));
     });
 });
 
 function init() {
     const match = $('select').val().match(/\d+/g);
     fillGrid(Number.parseInt(match[1]), Number.parseInt(match[0]));
-    initBoard();
+    const board = initBoard();
+    for (let i = 0; i < board.length; i++) {
+        gameState.push([]);
+        for (let j = 0; j < board[0].length; j++) {
+            gameState[i][j] = 0;
+        }
+    }
 }
 
 function fillGrid(rows, cols) {
@@ -30,7 +43,6 @@ function fillGrid(rows, cols) {
             td.setAttribute('row', i.toString());
             td.setAttribute('class', 'grid-item');
             r.appendChild(td);
-            //console.log(td.outerHTML);
         }
         grid.innerHTML += r.outerHTML;
     }
@@ -47,13 +59,32 @@ function initBoard() {
         mat.push([]);
         for (let j = 0; j < cols; j++) {
             if (Math.random() < slide.val()) {
-                mat[i][j] = 1;
+                mat[i][j] = 1; // 1 is block, and player must left click these cells
                 $(`#${i}`).children()[j].style.backgroundColor = 'lightGreen';
             }
             else {
-                mat[i][j] = 0;
+                mat[i][j] = 0; // 0 is empty space, and player may flag these cells
             }
         }
     }
     return mat;
+}
+
+function playerFlag(row, col) {
+    //const color = $(`#${row}`).children()[col].style.backgroundColor;
+    const cellState = gameState[row][col];
+    if (cellState == 2) {
+        gameState[row][col] = 0;
+    } else {
+        gameState[row][col] = 2;
+    }
+}
+
+function playerLeftClick(row, col) {
+    const cellState = gameState[row][col];
+    if (cellState == 1) {
+        gameState[row][col] = 0;
+    } else {
+        gameState[row][col] = 1;
+    }
 }
