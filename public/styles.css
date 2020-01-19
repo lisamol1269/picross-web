@@ -7,12 +7,15 @@
 }
 
 table {
-    border-spacing: 0px;    
+    border-spacing: 0px; 
+    display: flex;
+    width:40vw;
+    height:40vw;
 }
 
 td {
-    width: 2em;
-    height: 2em;
+    max-width:100%;
+    
     margin:0;
     background-color: white;
     border: 1px solid black;
