@@ -1,3 +1,5 @@
+let clicked = 0;
+let totalBlocks = 0;
 let gameState = []; // 0: default, 1: playerLeftClick, 2: playerFlag
 $(document).ready(() => {
     init();
@@ -22,11 +24,16 @@ function listeners() {
     $('td').click((e) => {
         const obj = $(e.currentTarget);
         playerLeftClick(obj.attr('row'), obj.attr('col'));
+        if (numClicked == totalBlocks) {
+            checkWin();
+        }
     });
 }
 
 function init() {
     gameState = [];
+    totalBlocks = 0;
+    numClicked = 0;
     const match = $('select').val().match(/\d+/g);
     fillGrid(Number.parseInt(match[1]), Number.parseInt(match[0]));
     const board = initBoard();
@@ -56,7 +63,7 @@ function fillGrid(rows, cols) {
         }
         grid.innerHTML += r.outerHTML;
     }
-    const w = (window.innerWidth*0.5)/rows;
+    const w = (window.innerHeight)/rows;
     $('td').css('width', w);
     $('td').css('height', w);
 }
@@ -74,6 +81,7 @@ function initBoard() {
             if (Math.random() < slide.val()) {
                 mat[i][j] = 1; // 1 is block, and player must left click these cells
                 $(`#${i}`).children()[j].style.backgroundColor = 'lightGreen';
+                totalBlocks++;
             }
             else {
                 mat[i][j] = 0; // 0 is empty space, and player may flag these cells
@@ -99,9 +107,11 @@ function playerLeftClick(row, col) {
     const cellState = gameState[row][col];
     if (cellState == 1) {
         gameState[row][col] = 0;
+        numClicked--;
         $(`#${row}`).children()[col].style.backgroundColor = 'white';
     } else {
         gameState[row][col] = 1;
+        numClicked++;
         $(`#${row}`).children()[col].style.backgroundColor = 'black';
     }
 }
@@ -138,3 +148,6 @@ function getHintsVertical(matrix) {
     }
 }
 
+function checkWin() {
+    
+}
