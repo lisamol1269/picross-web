@@ -30,6 +30,8 @@ function init() {
     const match = $('select').val().match(/\d+/g);
     fillGrid(Number.parseInt(match[1]), Number.parseInt(match[0]));
     const board = initBoard();
+    const horizontalHints = getHintsHorizontal(board);
+    const verticalHints = getHintsVertical(board);
     for (let i = 0; i < board.length; i++) {
         gameState.push([]);
         for (let j = 0; j < board[0].length; j++) {
@@ -54,6 +56,9 @@ function fillGrid(rows, cols) {
         }
         grid.innerHTML += r.outerHTML;
     }
+    const w = (window.innerWidth*0.5)/rows;
+    $('td').css('width', w);
+    $('td').css('height', w);
 }
 
 function initBoard() {
@@ -100,3 +105,36 @@ function playerLeftClick(row, col) {
         $(`#${row}`).children()[col].style.backgroundColor = 'black';
     }
 }
+
+function getHintsHorizontal(matrix) {
+    let hints = [];
+    for (let i = 0; i < matrix.length; i++) {
+        let hintRow = [];
+        let total = 0;
+        for (let j = 0; j < matrix[0].length; j++) {
+            total+=matrix[i][j];
+            if (total > 0 && (matrix[i][j] == 0 || j == matrix[0].length-1)) {
+                hintRow.push(total);
+                total = 0;
+            }
+        }
+        hints.push(hintRow);
+    }
+}
+
+function getHintsVertical(matrix) {
+    let hints = [];
+    for (let j = 0; j < matrix[0].length; j++) {
+        let hintRow = [];
+        let total = 0;
+        for (let i = 0; i < matrix.length; i++) {
+            total+=matrix[i][j];
+            if (total > 0 && (matrix[i][j] == 0 || i == matrix.length-1)) {
+                hintRow.push(total);
+                total = 0;
+            }
+        }
+        hints.push(hintRow);
+    }
+}
+
